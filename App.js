@@ -29,23 +29,19 @@ const App = () => {
   const [login, setLogin] = useState(true);
 
   GoogleSignin.configure({
-    webClientId:
-      '753702414710-irfn3g5bjjeutpvc4ssl3f8bomrbaqo2.apps.googleusercontent.com',
+    webClientId: 'YOUR-CONFIG-KEY',
   });
 
   async function onLogin() {
     try {
       await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-      // Get the users ID token
       const {idToken} = await GoogleSignin.signIn();
 
-      // Create a Google credential with the token
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-      // Sign-in the user with the credential
       await auth().signInWithCredential(googleCredential);
+
       auth().onAuthStateChanged(onAuthStateChanged);
-      // onAuthStateChanged(data);
     } catch (e) {
       console.warn(e);
     }
@@ -66,11 +62,6 @@ const App = () => {
     setUser(data);
     if (login) setLogin(false);
   }
-
-  // useEffect(() => {
-  //   const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-  //   return subscriber; // unsubscribe on unmount
-  // }, []);
 
   return (
     <>
@@ -151,23 +142,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
     color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
   },
 });
 
