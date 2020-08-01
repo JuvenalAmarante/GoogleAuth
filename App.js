@@ -37,7 +37,7 @@ const App = () => {
       await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
       const {idToken} = await GoogleSignin.signIn();
 
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      const googleCredential = await auth.GoogleAuthProvider.credential(idToken);
 
       await auth().signInWithCredential(googleCredential);
 
@@ -90,16 +90,17 @@ const App = () => {
           </Text>
         </View>
         <View style={styles.sectionContainer}>
-          <GoogleSigninButton
+          {!user ? <GoogleSigninButton
             style={styles.buttonLogin}
             size={GoogleSigninButton.Size.Wide}
             color={GoogleSigninButton.Color.Light}
             onPress={onLogin}
             disabled={!login}
           />
+          :
           <TouchableOpacity style={styles.buttonLogout} onPress={onLogout}>
             <Text style={styles.textButton}>Sair</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>}
         </View>
       </View>
     </>
